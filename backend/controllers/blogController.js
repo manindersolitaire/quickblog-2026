@@ -34,7 +34,7 @@ export const addBlog = async(req,res)=>{
 
         const image = optimizedImageUrl
 
-        await blog.create({title , subTitle, description, category, image , isPublished})
+        await blog.create({title , subTitle, description, category, image  , isPublished})
         res.json({
             success : true,
             message : "Blog added successfully"
@@ -43,7 +43,64 @@ export const addBlog = async(req,res)=>{
     } catch (error) {
         res.json({
             success : false,
-            message : "Blog added failed"
+            message : "Blog added failed",
+            error
+        })
+    }
+}
+
+export const getAllBlogs = async (req,res) => {
+    try {
+        const blogs = await blog.find({isPublished :  true})
+        res.json({success : true , blogs})
+    } catch (error) {
+        res.json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+export const getBlogById = async (req,res) => {
+    try {
+        const {blogId} =  req.params
+        const data =  await blog.findById(blogId)
+        if(!data){
+            return res.json({success : false, message : 'Blog not found'})
+        }
+        res.json({success : true , data})
+    } catch (error) {
+        res.json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+export const deleteBlogById = async (req,res) => {
+    try {
+        const {id} =  req.params
+        await blog.findByIdAndDelete(id)
+        res.json({success : true , message : "Blog deleted successfully"})
+    } catch (error) {
+        res.json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+export const togglePublish = async(req,res) => {
+    try {
+        const {id} = req.body
+        const Blog =  await blog.findById(id)
+        Blog.isPublished = !Blog.isPublished
+        await Blog.save()
+        res.json({success : true , message : "Blog status updated"})
+    } catch (error) {
+         res.json({
+            success : false,
+            message : error.message
         })
     }
 }
