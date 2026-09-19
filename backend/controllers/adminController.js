@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken'
+import blog from '../models/Blog.js'
+import Comment from '../models/Comment.js'
 export const adminLogin = async (req,res) => {
     try {
         const {email, password} = req.body
@@ -17,3 +19,72 @@ export const adminLogin = async (req,res) => {
         })       
     }
 }
+export const getAllBlogAdmin = async (req,res)=>{
+    try {
+        const blogs = await blog.find({}).sort({createdAt : -1})
+        res.json({success : true, blogs})
+    } catch (error) {
+        res.json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+export const getAllComments = async (req,res)=>{
+    try {
+        const comments = await Comment.find({}).populate('blog').sort({createdAt : -1})
+        res.json({success : true, comments})
+    } catch (error) {
+        res.json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+export const getDashboard = async(req,res)=>{
+    try {
+        const recentBlogs = await blog.find({}).sort({createdAt : -1}).limit(5)
+        const blogs = await blog.countDocuments()
+        const comments = await Comment.countDocuments()
+        const drafts = await blog.countDocuments({isPublished : false})
+        const dashboardData = {
+            blogs, comments , drafts, recentBlogs
+        }
+        res.json({success : true, dashboardData})
+    } catch (error) {
+        res.json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+export const deleteCommentsById = async(req,res)=>{
+    try {
+        const {id} = req.body
+        await Comment.findByIdAndDelete(id)
+        res.json({success : true, message : 'Comment deleted successfully'})
+
+    } catch (error) {
+        res.json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+export const approveCommentsById = async(req,res)=>{
+    try {
+        const {id} = req.body
+        await Comment.findByIdAndUpdate(id, {isApproved : true })
+        res.json({success : true, message : 'Comment Approved successfully'})
+
+    } catch (error) {
+        res.json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
