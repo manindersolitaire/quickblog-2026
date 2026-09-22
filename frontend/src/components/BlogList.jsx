@@ -1,6 +1,6 @@
 
 import { useState } from 'react'
-import { blog_data, blogCategories } from '../assets/assets'
+import { blogCategories } from '../assets/assets'
 import { motion } from "framer-motion"
 import BlogCard from './BlogCard'
 import { useAppContext } from '../context/AppContext'
