@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@google/genai": "^2.24.0",
     "cors": "^2.8.6",
     "dns": "^0.2.2",
     "dotenv": "^17.4.2",

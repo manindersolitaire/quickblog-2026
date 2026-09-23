@@ -7,8 +7,8 @@ const adminRouter = express.Router()
 adminRouter.post('/login', adminLogin)
 adminRouter.get('/comments', auth , getAllComments)
 adminRouter.get('/blogs', auth , getAllBlogAdmin)
-adminRouter.get('/delete-comment', auth , deleteCommentsById)
-adminRouter.get('/approve-comment', auth , approveCommentsById)
+adminRouter.post('/delete-comment', auth , deleteCommentsById)
+adminRouter.post('/approve-comment', auth , approveCommentsById)
 adminRouter.get('/dashboard', auth , getDashboard)
 
 
