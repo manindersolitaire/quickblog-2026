@@ -7,6 +7,7 @@ import Footer from '../components/Footer'
 // import Loader from '../components/Loader'
 import { useAppContext } from '../context/AppContext'
 import toast from 'react-hot-toast'
+import Loader from '../components/Loader'
 
 const Blog = () => {
 
@@ -124,7 +125,7 @@ const Blog = () => {
 
     </div>
   ) : (
-    <div>Loading</div>
+    <Loader/>
   )
 }
 
