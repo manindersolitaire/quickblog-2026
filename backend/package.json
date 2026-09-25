@@ -8,7 +8,8 @@
     "imagekit": "^6.0.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.10.0",
-    "multer": "^2.3.0"
+    "multer": "^2.3.0",
+    "openai": "^7.23.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
